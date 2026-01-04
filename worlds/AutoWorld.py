@@ -96,8 +96,7 @@ class AutoWorldRegister(type):
                     # all the "magic" game names that core AP tests assume exist and fail without
                     or dct["game"] == "Archipelago"
                     or dct["game"] == "Test Game"
-                    or dct["game"] == "A Link to the Past"
-                    or dct["game"] == "Timespinner"
+                    or dct["game"] == "APQuest"
                     # this is only required by the CI-only hosting/__main__.py test
                     or dct["game"] == "Temp World"
                     # and finally, this one is only required by the CI-only "Build" jobs because build.yml
