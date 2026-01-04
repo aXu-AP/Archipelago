@@ -90,9 +90,8 @@ class TestAllShipDamageTrapsWorld(OuterWildsTestBase):
 
 
 class TestEveryKindOfTrapWorld(OuterWildsTestBase):
-    # this test is technically non-deterministic, but the odds of failure are very low,
-    # especially if we keep the seed fixed
-    seed = 1
+    # this test is technically non-deterministic, since it could randomly never choose one of the trap types,
+    # so we need to keep the seed fixed
     options = {
         "trap_chance": 100,
         "trap_type_weights": {
@@ -106,6 +105,10 @@ class TestEveryKindOfTrapWorld(OuterWildsTestBase):
             "Supernova Trap": 1,
         }
     }
+    seed = 1
+
+    def world_setup(self, *args, **kwargs):
+        super().world_setup(self.seed)
 
     def test_every_kind_of_trap(self):
         for t in trap_names:
