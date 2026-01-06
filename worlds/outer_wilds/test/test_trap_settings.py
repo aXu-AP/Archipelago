@@ -69,13 +69,7 @@ class TestAllShipDamageTrapsWorld(OuterWildsTestBase):
         "trap_chance": 100,
         "trap_type_weights": {
             "Ship Damage Trap": 1,
-            "Nap Trap": 0,
-            "Audio Trap": 0,
-            "Suit Puncture Trap": 0,
-            "Map Disable Trap": 0,
-            "HUD Corruption Trap": 0,
-            "Ice Physics Trap": 0,
-            "Supernova Trap": 0,
+            # also test that the other keys are optional
         }
     }
 
