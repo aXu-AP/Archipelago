@@ -84,6 +84,7 @@ class OuterWildsWorld(World):
                 if "Outer Wilds" in self.multiworld.re_gen_passthrough:
                     slot_data = self.multiworld.re_gen_passthrough["Outer Wilds"]
                     self.warps = slot_data["warps"]
+                    self.options.goal = slot_data["goal"]
                     self.options.spawn = slot_data["spawn"]
                     self.options.logsanity.value = slot_data["logsanity"]
                     self.options.enable_eote_dlc.value = slot_data["enable_eote_dlc"]
