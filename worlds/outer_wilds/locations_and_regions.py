@@ -247,14 +247,14 @@ def eval_criterion(state: CollectionState, p: int, criterion: Any, split_transla
             return False
         key, value = next(iter(criterion.items()))
 
-        # { "item": "..." } and { "anyOf": [ ... ] } and { "location": "foo" } and { "region": "bar" }
-        # mean exactly what they sound like, and those are the only kinds of criteria.
         if key == "item" and isinstance(value, str):
             if not split_translator and value.startswith("Translator ("):
                 return state.has("Translator", p)
             return state.has(value, p)
         elif key == "anyOf" and isinstance(value, list):
             return any(eval_criterion(state, p, sub_criterion, split_translator) for sub_criterion in value)
+        elif key == "allOf" and isinstance(value, list):
+            return all(eval_criterion(state, p, sub_criterion, split_translator) for sub_criterion in value)
         elif key == "location" and isinstance(value, str):
             return state.can_reach(value, "Location", p)
         elif key == "region" and isinstance(value, str):
@@ -280,7 +280,7 @@ def regions_referenced_by_criterion(criterion: Any) -> list[str]:
         key, value = next(iter(criterion.items()))
         if key == "item":
             return []
-        elif key == "anyOf":
+        elif key == "anyOf" or key == "allOf":
             return [region for sub_criterion in value for region in regions_referenced_by_criterion(sub_criterion)]
         elif key == "location":
             return [location_data_table[value].region]
