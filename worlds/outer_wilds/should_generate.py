@@ -8,7 +8,7 @@ def should_generate_location(category: str | None, requires_logsanity: bool, opt
     return should_generate(category, options)
 
 
-def should_generate(category: str | None, options: OuterWildsGameOptions) -> bool:
+def should_generate(category: str | None, options: OuterWildsGameOptions, name: str | None = None) -> bool:
     if category is None:  # this item/location/connection gets generated no matter what the player options are
         return True
     elif '&' in category:
@@ -33,4 +33,6 @@ def should_generate(category: str | None, options: OuterWildsGameOptions) -> boo
         return options.enable_fc_mod.value == 1
     elif category == 'eh':
         return options.enable_eh_mod.value == 1
+    elif category == 'se':
+        return options.enable_se_mod.value == 1 and name in options.se_mod_features.value
     raise ValueError(f'Invalid category: {category}')

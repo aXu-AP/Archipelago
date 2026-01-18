@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from schema import Schema, And, Optional
 
-from Options import Choice, DefaultOnToggle, PerGameCommonOptions, Range, StartInventoryPool, Toggle, OptionCounter
+from Options import Choice, DefaultOnToggle, PerGameCommonOptions, Range, StartInventoryPool, Toggle, OptionCounter, OptionSet
 
 
 class Goal(Choice):
@@ -295,6 +295,79 @@ class EnableEchoHikeMod(Toggle):
     display_name = "Enable Echo Hike Story Mod"
 
 
+class EnableShipEnhancementsMod(Toggle):
+    """
+    Incorporates Ship Enhancements mod content into the randomizer with an additional XX items (no locations).
+    """
+    display_name = "Enable Ship Enhancements Mod"
+
+
+class ShipEnhancementsFeatures(OptionSet):
+    """
+    Select which features of the Ship Enhancements mod to include in the randomizer.
+    """
+    display_name = "Ship Enhancements Features"
+    valid_keys = {
+        "Scout Retrieval",
+        "Advanced Autopilot",
+        "Ship Signal",
+        "Portable Campfire",
+        "Portable Tractor Beam",
+        "Portable Fuel Canister",
+        "Repair Wrench",
+        "Tether",
+        "Resource Pump",
+        "Gravity Landing Gear",
+        "Thrust Modulator",
+        "Ship Lights",
+        "Progressive Gravity Crystal",
+        "Progressive Headlights",
+        "Damage Indicators",
+        "Seatbelt",
+        "Medkit",
+        "Hatch",
+        "Ship Tractor Beam",
+        "Ship Oxygen Capacity Upgrade",
+        "Ship Fuel Capacity Upgrade",
+        "Hull Reinforcement",
+        "Less Broken Ship",
+        "Automatic Ship Oxygen Intake",
+        "Minimap Markers",
+        "Extra Eject Buttons",
+        "Expedition Flag",
+        "Radio",
+        "Clock",
+        "Ernesto",
+    }
+    default = {
+        "Scout Retrieval",
+        "Advanced Autopilot",
+        "Ship Signal",
+        "Portable Campfire",
+        "Portable Tractor Beam",
+        "Portable Fuel Canister",
+        "Repair Wrench",
+        "Tether",
+        "Resource Pump",
+        "Gravity Landing Gear",
+        "Thrust Modulator",
+        "Ship Lights",
+        "Progressive Gravity Crystal",
+        "Progressive Headlights",
+        "Damage Indicators",
+        "Seatbelt",
+        "Medkit",
+        "Hatch",
+        "Ship Tractor Beam",
+        "Ship Oxygen Capacity Upgrade",
+        "Ship Fuel Capacity Upgrade",
+        "Hull Reinforcement",
+        "Less Broken Ship",
+        "Automatic Ship Oxygen Intake",
+        "Minimap Markers",
+    }
+
+
 @dataclass
 class OuterWildsGameOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
@@ -322,6 +395,8 @@ class OuterWildsGameOptions(PerGameCommonOptions):
     enable_fq_mod: EnableFretsQuestMod
     enable_fc_mod: EnableForgottenCastawaysMod
     enable_eh_mod: EnableEchoHikeMod
+    enable_se_mod: EnableShipEnhancementsMod
+    se_mod_features: ShipEnhancementsFeatures
 
 
 def get_creation_settings(options: OuterWildsGameOptions) -> set[str]:

@@ -3,6 +3,7 @@ import typing
 from typing import NamedTuple
 
 from BaseClasses import Item, ItemClassification
+from Options import OptionError
 from Utils import restricted_loads
 from .options import Spawn
 from .should_generate import should_generate
@@ -168,9 +169,18 @@ def create_items(world: "OuterWildsWorld") -> None:
     options = world.options
     player = world.player
 
-    items_to_create = {k: v for k, v in item_data_table.items() if should_generate(v.category, options)}
+    items_to_create = {k: v for k, v in item_data_table.items() if should_generate(v.category, options, k)}
 
     repeated_prog_useful_items = {k: v for k, v in options.upgrade_counts.items()}
+
+    if options.enable_se_mod.value:
+        repeated_prog_useful_items.update({
+            "Progressive Gravity Crystal": 2,
+            "Progressive Headlights": 2,
+            "Ship Oxygen Capacity Upgrade": 2,
+            "Ship Fuel Capacity Upgrade": 2,
+            "Less Broken Ship": 2,
+        })
 
     prog_and_useful_items: list[OuterWildsItem] = []
     unique_filler: list[OuterWildsItem] = []
@@ -221,7 +231,8 @@ def create_items(world: "OuterWildsWorld") -> None:
     # here we use the term "junk" to mean "filler or trap items"
     unique_item_count = len(prog_and_useful_items) + len(unique_filler)
     unfilled_location_count = len(multiworld.get_unfilled_locations(player))
-    assert unfilled_location_count > unique_item_count
+    if unfilled_location_count < unique_item_count:
+        raise OptionError(f'Not enough locations ({unfilled_location_count}) to hold all unique items ({unique_item_count}).')
     repeatable_filler_needed = unfilled_location_count - unique_item_count
     junk_names = list(repeatable_filler_weights.keys())
     junk_weights = list(repeatable_filler_weights.values())

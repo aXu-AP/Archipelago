@@ -101,6 +101,7 @@ class OuterWildsWorld(World):
                     self.options.enable_fq_mod.value = slot_data["enable_fq_mod"]
                     self.options.enable_fc_mod.value = slot_data["enable_fc_mod"]
                     self.options.enable_eh_mod.value = slot_data["enable_eh_mod"]
+                    self.options.enable_se_mod.value = slot_data["enable_se_mod"]
                     self.options.split_translator.value = slot_data["split_translator"]
             return
 
@@ -205,7 +206,7 @@ class OuterWildsWorld(World):
             "goal", "spawn",                             # affects tons of stuff, but also a client/mod faeture
             "logsanity", "enable_eote_dlc", "dlc_only",  # changes AP locations, needed by in-game tracker
             "enable_hn1_mod", "enable_hn2_mod",
-            "enable_outsider_mod", "enable_ac_mod", "enable_fq_mod", "enable_fc_mod", "enable_eh_mod",
+            "enable_outsider_mod", "enable_ac_mod", "enable_fq_mod", "enable_fc_mod", "enable_eh_mod", "enable_se_mod",
             "split_translator"                           # changes AP items, and how client/mod implements Translator
         )
         # more client/mod features, these are only in the apworld because we want them fixed per-slot/at gen time
